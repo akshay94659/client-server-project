@@ -18,8 +18,8 @@ class BatchResponse:
         return self.id
 
 
-@app.route('/query')
-def query():
+@app.route('/get_batches')
+def get_batches():
     id = request.args.get('id')  # if key doesn't exist, returns None
     bench_type = request.args['bench_type']  # if key doesn't exist, returns a 400, bad request error
     metric = request.args.get('metric')
