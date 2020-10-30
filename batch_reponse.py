@@ -14,7 +14,12 @@ class BatchResponse:
 
     def send_results(self):
         samples = self._number_of_samples()
-        print(self.create_batches())
+        print({
+            "rfw_id": self.id,
+            "last_batch_id": self.create_batches()[1],
+            "number_of_samples": samples,
+            "batches": self.create_batches()[0]
+        })
         return {
             "rfw_id": self.id,
             "last_batch_id": self.create_batches()[1],
