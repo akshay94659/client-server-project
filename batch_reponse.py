@@ -37,7 +37,7 @@ class BatchResponse:
     # private methods
 
     def _get_column_from_csv(self):
-        data_column = pd.DataFrame(self.csv_data[self.metric])
+        data_column = self.csv_data[self.metric]
         return data_column
 
     def _number_of_samples(self):
