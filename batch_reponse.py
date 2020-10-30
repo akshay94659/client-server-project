@@ -12,20 +12,29 @@ class BatchResponse:
         self.batch_unit = int(batch_unit)
         self.csv_data = pd.read_csv("./data/" + bench_type + ".csv")
 
-    def send_results(self):
+    def send_json_results(self):
         samples = self._number_of_samples()
+        (batches, last_batch_id) = self.create_batches()
+        json_batches = self.convert_batches_to_json(batches)
         print({
             "rfw_id": self.id,
-            "last_batch_id": self.create_batches()[1],
+            "last_batch_id": last_batch_id,
             "number_of_samples": samples,
-            "batches": self.create_batches()[0]
+            "batches": json_batches
         })
         return {
             "rfw_id": self.id,
-            "last_batch_id": self.create_batches()[1],
+            "last_batch_id": last_batch_id,
             "number_of_samples": samples,
-            "batches": self.create_batches()[0]
+            "batches": json_batches
         }
+
+    def convert_batches_to_json(self, batches):
+        batch_list = list()
+        for batch in batches:
+            json_batch = batch.to_json()
+            batch_list.append(json_batch)
+        return json.dumps(batch_list)
 
     def create_batches(self):
         batches = []
@@ -33,11 +42,27 @@ class BatchResponse:
         last_batch_id = self.batch_id
         for index in range(0, self.batch_size):
             batch = column[last_batch_id * self.batch_unit: (last_batch_id + 1) * self.batch_unit]
-            json_batch = batch.to_json()
-            batches.append(json_batch)
+            batches.append(batch)
             last_batch_id += 1
 
-        return json.dumps(batches), last_batch_id
+        return batches, last_batch_id
+
+    def binary_result(self):
+        samples = self._number_of_samples()
+        (batches, last_batch_id) = self.create_batches()
+        print({
+            "rfw_id": self.id,
+            "last_batch_id": last_batch_id,
+            "number_of_samples": samples,
+            "batches": batches
+        })
+        return {
+            "rfw_id": self.id,
+            "last_batch_id": last_batch_id,
+            "number_of_samples": samples,
+            "batches": batches
+        }
+
 
     # private methods
 

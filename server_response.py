@@ -13,7 +13,7 @@ def get_batches():
     batch_id = request.args.get('batch_id')  # if key doesn't exist, returns a 400, bad request error
     batch_size = request.args.get('batch_size')
     batch_object = BatchResponse(id, bench_type, metric, batch_unit, batch_id, batch_size)
-    result = batch_object.send_results()
+    result = batch_object.send_json_results()
     if result is not None:
         return result
 

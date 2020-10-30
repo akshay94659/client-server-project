@@ -10,6 +10,6 @@ batch_id = int(input('Please Enter the Batch Id (from which batch you want the d
 batch_unit = int(input('Please Enter the number of samples you want in one batch in integer: '))
 batch_size = int(input('Please Enter the number of batches to be returned in integer: '))
 
-res = requests.get("http://0.0.0.0:80/get_batches?id={}&bench_type={}&metric={}&batch_unit={}&batch_id={}&batch_size={}"
+res = requests.get("http://127.0.0.1:5000/get_batches?id={}&bench_type={}&metric={}&batch_unit={}&batch_id={}&batch_size={}"
                    .format(id, bench_type, metric, batch_unit, batch_id, batch_size))
 print(res.text)

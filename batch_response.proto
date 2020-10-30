@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+message Request {
+  string id = 1;
+  string bench_type = 2;
+  string metric = 3;
+  int32 batch_id = 5;
+  int32 batch_unit = 4;
+  int32 batch_size = 6;
+}
+
+message Response {
+  string id = 1;
+  string number_of_samples = 2;
+  int32 last_batch_id = 5;
+}
