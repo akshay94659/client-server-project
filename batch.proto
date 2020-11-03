@@ -11,12 +11,9 @@ message Request {
 
 message Response {
   string id = 1;
-  string number_of_samples = 2;
-  int32 last_batch_id = 3;
-
-  message Batch {
-    string data = 1;
-    string value = 2;
-  }
-  repeated Batch batches = 4;
+  int32 last_batch_id = 2;
+  repeated Batch batches = 3;
+}
+message Batch {
+  repeated float samples = 1;
 }

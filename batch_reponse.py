@@ -25,7 +25,6 @@ class BatchResponse:
         return {
             "rfw_id": self.id,
             "last_batch_id": last_batch_id,
-            "number_of_samples": samples,
             "batches": json_batches
         }
 
