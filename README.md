@@ -1,5 +1,5 @@
 # coen-6313-A1
-This readme will guide you how to run your application on your local system.
+This project is a part of the assignment for the course COEN-6313 at Concordia University. A client server program using two different Serialization and De-serialization methods.
 
 ### Installing Dependencies
 1. `git clone https://github.com/ahujasushant/coen-6313-A1.git` if you have the access rights.

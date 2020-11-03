@@ -15,25 +15,24 @@ class BatchResponse:
     def send_json_results(self):
         samples = self._number_of_samples()
         (batches, last_batch_id) = self.create_batches()
-        json_batches = self.convert_batches_to_json(batches)
+        batches = self.convert_series_to_dict(batches)
         print({
             "rfw_id": self.id,
             "last_batch_id": last_batch_id,
             "number_of_samples": samples,
-            "batches": json_batches
         })
         return {
             "rfw_id": self.id,
             "last_batch_id": last_batch_id,
-            "batches": json_batches
+            "samples": batches
         }
 
-    def convert_batches_to_json(self, batches):
+    def convert_series_to_dict(self, batches):
         batch_list = list()
         for batch in batches:
-            json_batch = batch.to_json()
-            batch_list.append(json_batch)
-        return json.dumps(batch_list)
+            dict_batch = batch.to_dict()
+            batch_list.append(dict_batch)
+        return batch_list
 
     def create_batches(self):
         batches = []
@@ -44,7 +43,7 @@ class BatchResponse:
             batches.append(batch)
             last_batch_id += 1
 
-        return batches, last_batch_id
+        return batches, (last_batch_id - 1)
 
     def binary_result(self):
         samples = self._number_of_samples()
@@ -62,7 +61,6 @@ class BatchResponse:
             "batches": batches
         }
 
-
     # private methods
 
     def _get_column_from_csv(self):
@@ -71,6 +69,3 @@ class BatchResponse:
 
     def _number_of_samples(self):
         return self.batch_size * self.batch_unit
-
-
-# http://0.0.0.0/get_batches?id=1&bench_type=DVD-testing&metric=NetworkIn_Average&batch_unit=100&batch_id=2&batch_size=8
