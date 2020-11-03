@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, json
 from batch_reponse import BatchResponse
 
 app = Flask(__name__)
@@ -15,8 +15,8 @@ def get_batches():
     batch_object = BatchResponse(id, bench_type, metric, batch_unit, batch_id, batch_size)
     result = batch_object.send_json_results()
     if result is not None:
-        return result
+        return json.dumps(result)
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=False)

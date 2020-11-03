@@ -20,7 +20,7 @@ def get_batches():
         proto_batch = batch_pb2.Batch()
         samples_arr = []
         for i in range(0, len(batch)):
-            samples_arr.append(batch.values[i])
+            samples_arr.append(batch[list(batch.keys())[0]])
         proto_batch.samples[:] = samples_arr
         batch_response.batches.append(proto_batch)
 
@@ -32,4 +32,4 @@ def get_batches():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)  # run app in debug mode on port 5000
+    app.run(debug=False)

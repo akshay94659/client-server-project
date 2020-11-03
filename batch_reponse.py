@@ -30,7 +30,7 @@ class BatchResponse:
     def convert_series_to_dict(self, batches):
         batch_list = list()
         for batch in batches:
-            dict_batch = batch.to_dict()
+            dict_batch = batch
             batch_list.append(dict_batch)
         return batch_list
 
@@ -39,9 +39,10 @@ class BatchResponse:
         column = self._get_column_from_csv()
         last_batch_id = self.batch_id
         for index in range(0, self.batch_size):
-            batch = column[last_batch_id * self.batch_unit: (last_batch_id + 1) * self.batch_unit]
+            batch = column[last_batch_id * self.batch_unit: (last_batch_id + 1) * self.batch_unit].to_dict()
             batches.append(batch)
             last_batch_id += 1
+        print(batches)
 
         return batches, (last_batch_id - 1)
 

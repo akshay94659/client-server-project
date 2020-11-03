@@ -18,4 +18,7 @@ res = requests.get("http://127.0.0.1:5000/get_batches?",
                          "batch_id": batch_id,
                          "batch_size": batch_size}
                    )
-print(res.text)
+if res.status_code == 200:
+    print(" rfw_id: ", res.json()['rfw_id'])
+    print(" last_batch_id: ", res.json()['last_batch_id'])
+    print(" Samples Requested: ", res.json()['samples'])
