@@ -1,9 +1,8 @@
 import batch_pb2, requests
-# FOO = batch_pb2.Response.FromString(open("/tmp/whatever2", "rb").read())
-# print(FOO)
+
+
 batch_request = batch_pb2.Request()
-# if __name__ == "__main__":
-#     pass
+
 id = input('Please Enter Request For Workload (RFW) ID:')
 bench_type = input('Please Enter one of the following:\n 1. DVD-testing\n 2. DVD-training\n 3. NDBench-training\n'
                    '4. NDBench-training\n')
