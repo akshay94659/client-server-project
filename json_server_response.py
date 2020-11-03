@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request
 from batch_reponse import BatchResponse
 
 app = Flask(__name__)
