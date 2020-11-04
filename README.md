@@ -11,7 +11,7 @@ This project is a part of the assignment for the course COEN-6313 at Concordia U
 
 ### Running JSON Based Serialization:
 1. Run `python json_server_response.py`
-Your server should be running on `http://127.0.0.1:5000/`
+Your server should be running on `http://0.0.0.1:5000/`
 2. Run `python json_client_request.py`
 3. Enter the values as asked.
 4. You should get a response.
