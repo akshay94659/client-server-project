@@ -23,3 +23,6 @@ Your server should be running on `http://127.0.0.1:5000/`
 4. You should get a response.
 
 ### Deployment
+1. We deployed our application on AWS EC2 instance.
+2. We used scp to copy files from local to AWS EC2 instance.
+3. We ran json and protobuf servers on AWS EC2 instance.
