@@ -20,7 +20,7 @@ batch_request.batch_id = batch_id
 batch_request.batch_unit = batch_unit
 batch_request.batch_size = batch_size
 
-res = requests.get("http://127.0.0.1:5000/get_batches", headers={'Content-Type': 'application/protobuf'},
+res = requests.get("http://0.0.0.0:5000/get_batches?", headers={'Content-Type': 'application/protobuf'},
                    data=batch_request.SerializeToString())
 
 batch_response = batch_pb2.Response.FromString(res.content)
