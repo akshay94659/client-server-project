@@ -1,40 +1,37 @@
 import pandas as pd
-import json
 
 
-class BatchResponse:
-    def __init__(self, rfwId, benchType, metric, batchId, batchUnit, batchSize):
+class ResponseService:
+    def __init__(self, rfwId, benchType, metric, batchId, batchUnit, batchSize,dataType,dataAnalytics):
         self.rfwId = rfwId
         self.benchType = benchType
         self.metric = metric
         self.batchId = int(batchId)
         self.batchSize = int(batchSize)
         self.batchUnit = int(batchUnit)
-        self.csv_data = pd.read_csv("./Workload-Data/" + benchType + ".csv")
+        self.dataType= dataType
+        self.dataAnalytics= dataAnalytics
+        self.csv_data = pd.read_csv("./Workload-Data/" + benchType+"-"+dataType + ".csv")
 
     def send_json_results(self):
         samples = self.batchSize * self.batchUnit
-        (batches, last_batch_id) = self.create_batches()
+        (batches, lastBatchId) = self.create_batches()
         batches = self.convert_series_to_dict(batches)
-        print({
-            "rfw_id": self.rfwId,
-            "last_batch_id": last_batch_id,
-            "number_of_samples": samples,
-        })
         return {
             "rfwId": self.rfwId,
-            "lastBatchId": last_batch_id,
-            "samples": batches
+            "lastBatchId": lastBatchId,
+            "samples": batches,
+            "dataAnalytics" : self.dataAnalytics
         }
 
     def convert_series_to_dict(self, batches):
-        batch_list = list()
+        batchList = list()
         for batch in batches:
-            dict_batch = batch
-            batch_list.append(dict_batch)
-        return batch_list
+            dictBatch = batch
+            batchList.append(dictBatch)
+        return batchList
 
-    def create_batches(self):
+    def createBatches(self):
         batches = []
         column = self.csv_data[self.metric]
         last_batch_id = self.batchId
@@ -48,16 +45,10 @@ class BatchResponse:
 
     def binary_result(self):
         samples = self.batchSize * self.batchUnit
-        (batches, last_batch_id) = self.create_batches()
-        print({
-            "rfw_id": self.id,
-            "last_batch_id": last_batch_id,
-            "number_of_samples": samples,
-            "batches": batches
-        })
+        (batches, lastBatchId) = self.createBatches()
         return {
             "rfw_id": self.id,
-            "last_batch_id": last_batch_id,
+            "last_batch_id": lastBatchId,
             "number_of_samples": samples,
             "batches": batches
         }

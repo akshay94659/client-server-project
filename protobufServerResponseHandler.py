@@ -1,35 +1,22 @@
 from flask import Flask, request, json
-from batch_reponse import BatchResponse
-import batch_pb2
-
+from responseService import ResponseService
+import buf_pb2
 app = Flask(__name__)
 
 
-@app.route('/getBachesJson', methods=['GET'])
-def get_batches():
-    rfwId = request.json['rfwId']
-    benchType = request.json['benchType']
-    metric = request.json['metric']
-    batchId = request.json['batchId']
-    batchUnit = request.json['batchUnit']
-    batchSize = request.json['batchSize']
-    batch_object = BatchResponse(rfwId, benchType, metric, batchId, batchUnit, batchSize)
-    result = batch_object.send_json_results()
-    if result is not None:
-        return json.dumps(result)
 
 @app.route('/getBatchesProtoBuf', methods=['GET'])
 def get_batches():
-    batch_request = batch_pb2.Request.FromString(request.data)
-    batch_response = batch_pb2.Response()
-    batch_object = BatchResponse(batch_request.id, batch_request.bench_type, batch_request.metric,
+    batch_request =buf_pb2 .Request.FromString(request.data)
+    batch_response = buf_pb2.Response()
+    batch_object = ResponseService(batch_request.id, batch_request.bench_type, batch_request.metric,
                                  batch_request.batch_unit, batch_request.batch_id, batch_request.batch_size)
     result = batch_object.binary_result()
     batch_response.id = result['rfw_id']
     batch_response.last_batch_id = result['last_batch_id']
     batches = result['batches']
     for batch in batches:
-        proto_batch = batch_pb2.Batch()
+        proto_batch = buf_pb2.Batch()
         samples_arr = []
         for i in range(0, len(batch)):
             samples_arr.append(batch[list(batch.keys())[0]])
@@ -44,4 +31,4 @@ def get_batches():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', debug=False, port=5000)
+  app.run(host='0.0.0.0', debug=False, port=5000)

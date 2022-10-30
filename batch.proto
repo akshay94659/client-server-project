@@ -7,12 +7,15 @@ message Request {
   int32 batch_id = 5;
   int32 batch_unit = 4;
   int32 batch_size = 6;
+  string dataType = 7;
+  string dataAnalytics = 8;
 }
 
 message Response {
   string id = 1;
   int32 last_batch_id = 2;
   repeated Batch batches = 3;
+  string datAnalytics = 4;
 }
 message Batch {
   repeated float samples = 1;
