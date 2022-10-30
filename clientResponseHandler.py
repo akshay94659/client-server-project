@@ -1,12 +1,24 @@
-from flask import Flask, request
+from flask import Flask, request, json
 from batch_reponse import BatchResponse
 import batch_pb2
-
 
 app = Flask(__name__)
 
 
-@app.route('/get_batches', methods=['GET'])
+@app.route('/getBachesJson', methods=['GET'])
+def get_batches():
+    rfwId = request.json['rfwId']
+    benchType = request.json['benchType']
+    metric = request.json['metric']
+    batchId = request.json['batchId']
+    batchUnit = request.json['batchUnit']
+    batchSize = request.json['batchSize']
+    batch_object = BatchResponse(rfwId, benchType, metric, batchId, batchUnit, batchSize)
+    result = batch_object.send_json_results()
+    if result is not None:
+        return json.dumps(result)
+
+@app.route('/getBatchesProtoBuf', methods=['GET'])
 def get_batches():
     batch_request = batch_pb2.Request.FromString(request.data)
     batch_response = batch_pb2.Response()
